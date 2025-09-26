@@ -1,1 +1,49 @@
-r
+import castillo.*
+import wollok.game.*
+import capos.*
+describe "Testeo capacidad" {
+
+    test "agarra espada" {
+        rolando.guardarArtefacto("Espada del destino")
+        assert.equals(1, rolando.cantidadArtefactos())
+    }
+    test "agarra libro"{
+        rolando.guardarArtefacto("Libro de hechizos")
+        assert.equals(1, rolando.cantidadArtefactos())
+    }
+
+    test "encuentra libro tras agarrar espada"{
+        rolando.guardarArtefacto("Espada del destino")
+        rolando.guardarArtefacto("Libro de hechizos")
+        assert.equals(2, rolando.cantidadArtefactos())
+    }
+    test "encuentra collar "{
+        rolando.guardarArtefacto("Espada del destino")
+        rolando.guardarArtefacto("Libro de hechizos")
+        rolando.guardarArtefacto("Collar divino")
+        assert.equals(2, rolando.cantidadArtefactos())
+
+    }
+}
+describe "testeo de castillo" {
+    method initialize() {
+        rolando.guardarArtefacto("Espada del destino")
+        rolando.guardarArtefacto("Libro de hechizos")
+    }
+
+    test "en el castillo" {
+        //rolando.posicion(castillo.position())
+        rolando.enElCastillo()
+        assert.equals(0, rolando.cantidadArtefactos())
+    }
+
+    test "luego encuentra el collar" {
+        rolando.posicion(castillo.position())
+        rolando.enElCastillo()
+        rolando.guardarArtefacto("Collar divino")
+        assert.equals(1, rolando.cantidadArtefactos())
+    }
+    test "no esta en casa" {
+        assert.equals(false , rolando.estaEnCasa())
+    }
+}
